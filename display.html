@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Display Image</title>
+    <style>
+        body {
+            cursor: crosshair;
+        }
+        #image {
+            max-width: 100%;
+            height: auto;
+        }
+    </style>
+</head>
+<body>
+    <h1>Click on the Image</h1>
+    <img id="image" src="{{ url_for('static', filename='uploads/uploaded_image.jpg') }}" onclick="sendCoords(event)">
+    <script>
+        function sendCoords(event) {
+            const x = event.offsetX;
+            const y = event.offsetY;
+            fetch('/click_coords', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded',
+                },
+                body: `x=${x}&y=${y}`,
+            });
+        }
+    </script>
+</body>
+</html>
